@@ -10,7 +10,8 @@ Professor: Luis Antonio Kowada
 ### Instruções de uso:
 ------------------
 
-Para usar o compilador, é preciso primeiro compilar ele.
+Antes de usar o compilador, é necessário criar o scanner, o parser e as classes da AST.
+
 Para isso, basta entrar nesta pasta pelo terminal e digitar o comando 'make'.
 
 Esse comando criará o scanner, o parser, as classes da AST e finalmente compilará o compilador pra MIPS.
@@ -26,3 +27,5 @@ Observe que no arquivo 'Makefile', no target 'run' está descrito o arquivo 'cod
 código fonte que o compilador ira ler para compilar.
 
 Caso queira limpar o projeto, voce pode usar o comando 'make clean' para apagar os binarios criados.
+
+Este repositório também é um projeto do netbeans, então depois de rodar os comandos 'make' que criam o scanner e o parser, voce pode usar o netbeans pra continuar o desenvolvimento.
