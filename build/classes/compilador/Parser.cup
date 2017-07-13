@@ -1,0 +1,136 @@
+package compilador;
+
+import java_cup.runtime.*;
+import java.util.*;
+import ast.*;
+
+parser code {:
+
+    public void syntax_error (Symbol s) {
+        report_error("Erro de sintaxe na linha: " + (s.right) + ", coluna: " + (s.left+1) + ". Token: '" +s.value+ "'", null);
+    }
+    
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+//        System.out.println("\nErro irreparavel na linha " + (s.right)+ ", coluna "+(s.left+1)+". Identificador " +s.value + " não reconhecido.");
+	}
+:};
+
+terminal	IF, THEN, ELSE, DEF;
+terminal    PLUS, MINUS, TIMES, DIV;
+terminal	ASM, EQ, LE, GR, SEMI, COM, DOT, DDOT, LPAREN, RPAREN;
+terminal    Integer INT;
+terminal    String IDENT;
+
+non terminal    String opArit, opRel;
+non terminal    Block P;
+non terminal    I I;
+non terminal    Def D;
+non terminal    Args ARGS;
+non terminal    E E;
+non terminal    Seq SEQ;
+
+precedence left IF, THEN, ELSE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIV;
+
+start with P;
+
+P ::=   IDENT:i1 ASM INT:i2 SEMI P:p1
+        {:
+		RESULT = new Asm(i1,new NumberExp(i2),p1);
+	:}
+      | I:i
+      {:
+      RESULT = i;
+      :}
+	;
+
+I ::= D:d I:i
+        {:
+            RESULT = new I(d, i);
+        :}
+    | D:d
+        {:
+            RESULT = new I(d, null);
+        :}
+	;
+
+D ::= DEF IDENT:func LPAREN ARGS:ar RPAREN ASM E:ed SEMI
+		{:							
+            RESULT = new Def(func, ar, ed);
+		:}
+    ;
+
+ARGS ::= IDENT:i COM ARGS:args
+		{:				
+            RESULT = new Args (i, args);
+		:}
+        | IDENT:i
+		{:
+            RESULT = new Args (i, null);
+		:}
+        ;
+
+SEQ ::= E:eseq
+        {:
+            RESULT = new Seq (null, eseq);
+        :}
+        | SEQ:se COM E:eseq1
+        {:
+            RESULT = new Seq (se, eseq1);
+        :}
+        ;
+
+E ::= INT:intei
+    {:
+        RESULT = new NumberExp(intei);
+    :}
+    | IDENT:ide
+        {:
+            RESULT = new Ident(ide);
+        :}
+    | IF E:e1 opRel:or E:e2 THEN E:e3 ELSE E:e4
+	    {:
+		    RESULT = new IfThenElse(e1, or, e2, e3, e4);
+		:}
+    | E:e1 opArit:op E:e2
+        {: 
+		    RESULT = new OpArit(e1,op,e2);
+		:}
+    | IDENT:id LPAREN SEQ:se RPAREN
+        {:
+            RESULT = new Decla (id, se);
+        :}
+    ;
+
+opRel ::= EQ:igual
+        {:
+            RESULT = (String)igual;
+        :}
+        | LE:menor
+        {:
+            RESULT = (String)menor;
+        :}
+        | GR:maior
+        {:
+            RESULT = (String)maior;
+        :}
+    ;
+
+opArit ::= PLUS:mais
+        {:
+            RESULT = (String)mais;
+        :}
+        | MINUS:menos
+        {:
+            RESULT = (String)menos;
+        :}
+        | TIMES:vezes
+        {:
+            RESULT = (String)vezes;
+        :}
+        | DIV:divi
+        {:
+            RESULT = (String)divi;
+        :}
+    ;
