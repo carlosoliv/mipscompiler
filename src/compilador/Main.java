@@ -1,7 +1,7 @@
 package compilador;
 
-import java.io.*;
-import ast.*;
+import java.io.FileReader;
+import ast.Block;
 
 public class Main {
 

@@ -1,6 +1,6 @@
 package compilador;
 
-import ast.*;
+import ast.Block;
 import java.util.List;
 
 //"Provide new implementations of the Visitor interface for the various semantics checks."
@@ -23,11 +23,11 @@ public class AnaliseSemantica {
         //quantParam.visit(block);
 
         // c) não há parâmetros repetidos (na declaração de uma função),
-        ParamRepeatVisitor paramRepeat = new ParamRepeatVisitor(block);
-        //paramRepeat.visit(block);
+        ParamRepeatVisitor paramRepeat = new ParamRepeatVisitor();
+        paramRepeat.visit(block);
 
         // d) não há funções declaradas mais de uma vez.
-        FuncRepetidaVisitor funcRep = new FuncRepetidaVisitor(block);
+        FuncRepetidaVisitor funcRep = new FuncRepetidaVisitor();
         funcRep.visit(block);
 
     }

@@ -1,20 +1,16 @@
 package compilador;
 
-import ast.Args;
 import ast.Block;
+import ast.Def;
 import ast.VisitorAdaptor;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParamRepeatVisitor extends VisitorAdaptor {
 
-    private Block block;
-    private List<String> listaArgs;
-    private int ocorrenciasArgs = 0;
+    private List<String> listaArgs = new ArrayList<String>();
 
-    public ParamRepeatVisitor(Block block) {
-        this.block = block;
-        listaArgs = new ArrayList<String>();
+    public ParamRepeatVisitor() {
     }
 
     @Override
@@ -23,20 +19,22 @@ public class ParamRepeatVisitor extends VisitorAdaptor {
     }
 
     @Override
-    public void visit(Args args) {
-        System.out.println("Pesquisando por argumentos de funcoes repetidos: "+args.id);
-        
-        if (listaArgs.size() == 0) listaArgs.add(args.id);
-        
-        for (int i=0; i < listaArgs.size(); i++) {
-            if (listaArgs.get(i).compareTo(args.id) == 0) ocorrenciasArgs++;
+    public void visit(Def no) {
+
+        while (no.listargs != null) {
+            //System.out.println("Funcao: "+no.id+"; Arg: "+no.listargs.id);
+    
+            for (int i = 0; i < listaArgs.size(); i++) {
+                if (listaArgs.get(i).compareTo(no.listargs.id) == 0) {
+                    System.out.println("Erro semantico: mais de uma ocorrencia do argumento '" + no.listargs.id + "' na funcao '"+no.id+"'!");
+                    System.exit(1);
+                }
+            }
+            listaArgs.add(no.listargs.id);
+            no.listargs = no.listargs.args;
         }
         
-        if (ocorrenciasArgs > 1) {
-            System.out.println("Mais de uma ocorrencia da funcao '"+args.id+"'!");
-            System.exit(1);
-        } else {
-            listaArgs.add(args.id);
-        }
+        // Cleaning the list for the next occurrence of the 'Def' node.
+        listaArgs = new ArrayList<String>();
     }
 }

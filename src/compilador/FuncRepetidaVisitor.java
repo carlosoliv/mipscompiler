@@ -1,20 +1,17 @@
 package compilador;
 
-import ast.*;
+import ast.Block;
+import ast.Def;
+import ast.VisitorAdaptor;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FuncRepetidaVisitor extends VisitorAdaptor {
 
-    private Block block;
-    private List<String> listaFuncoes, listaVariaveis;
+    private List<String> listaFuncoes = new ArrayList<String>();
     private int ocorrenciasFuncoes = 0;
-    private int ocorrenciasVariaveis = 0;
 
-    public FuncRepetidaVisitor(Block block) {
-        this.block = block;
-        listaFuncoes = new ArrayList<String>();
-        listaVariaveis = new ArrayList<String>();
+    public FuncRepetidaVisitor() {
     }
     
     @Override
@@ -23,28 +20,7 @@ public class FuncRepetidaVisitor extends VisitorAdaptor {
     }
 
     @Override
-    public void visit(Asm asm) {
-        
-        System.out.println("Pesquisando por variaveis repetidas: "+asm.id);
-        
-        if (listaVariaveis.size() == 0) listaVariaveis.add(asm.id);
-        
-        for (int i=0; i < listaVariaveis.size(); i++) {
-            if (listaVariaveis.get(i).compareTo(asm.id) == 0) ocorrenciasVariaveis++;
-        }
-        
-        if (ocorrenciasVariaveis > 1) {
-            System.out.println("Mais de uma ocorrencia da variavel '"+asm.id+"'!");
-            System.exit(1);
-        } else {
-            listaVariaveis.add(asm.id);
-        }
-    }
-
-    @Override
     public void visit(Def def) {
-        
-        System.out.println("Pesquisando por funcoes repetidas: "+def.id);
         
         if (listaFuncoes.size() == 0) listaFuncoes.add(def.id);
         
@@ -53,7 +29,7 @@ public class FuncRepetidaVisitor extends VisitorAdaptor {
         }
         
         if (ocorrenciasFuncoes > 1) {
-            System.out.println("Mais de uma ocorrencia da funcao '"+def.id+"'!");
+            System.out.println("Erro semantico mais de uma declaracao da funcao '"+def.id+"'!");
             System.exit(1);
         } else {
             listaFuncoes.add(def.id);

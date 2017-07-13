@@ -1,3 +1,6 @@
 *~
 *.class
 *.jar
+/dist/
+/build/
+/nbproject/private/
