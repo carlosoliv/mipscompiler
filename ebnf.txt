@@ -1,0 +1,9 @@
+********** Gramatica original **********
+
+P → id = int ; P | I
+I → D I | D
+D → def id (ARGS) = E;
+ARGS → id, ARGS | id
+SEQ → E| SEQ , E
+E → int | id | if E opRel E then E else E | E opArit E | id( SEQ )
+

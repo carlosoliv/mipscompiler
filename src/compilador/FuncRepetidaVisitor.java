@@ -6,6 +6,7 @@ import ast.VisitorAdaptor;
 import java.util.ArrayList;
 import java.util.List;
 
+// d) não há funções declaradas mais de uma vez.
 public class FuncRepetidaVisitor extends VisitorAdaptor {
 
     private List<String> listaFuncoes = new ArrayList<String>();

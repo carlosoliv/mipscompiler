@@ -6,6 +6,7 @@ import ast.VisitorAdaptor;
 import java.util.ArrayList;
 import java.util.List;
 
+// c) não há parâmetros repetidos (na declaração de uma função)
 public class ParamRepeatVisitor extends VisitorAdaptor {
 
     private List<String> listaArgs = new ArrayList<String>();
