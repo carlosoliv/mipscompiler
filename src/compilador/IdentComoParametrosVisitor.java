@@ -2,7 +2,6 @@ package compilador;
 
 import ast.Block;
 import ast.Def;
-import ast.E;
 import ast.Ident;
 import ast.VisitorAdaptor;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.List;
 public class IdentComoParametrosVisitor extends VisitorAdaptor {
 
     private List<String> listaArgs = new ArrayList<String>();
-    private List<String> listaNomes = new ArrayList<String>();
     private String defAtual = "";
 
     @Override

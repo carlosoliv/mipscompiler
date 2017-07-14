@@ -24,12 +24,13 @@ public class Main {
         // Fazendo a analise semantica
         AnaliseSemantica analise = new AnaliseSemantica(result);
         analise.analisa();
-        System.out.println("Passou em todas as analises semanticas!");
+        System.out.println("Passou em todas as analises semanticas.");
         
-        /*
         // Fazendo a geracao de codigo MIPS
+        String nomeArq = "mips.asm";
         GeraCodigo gerador = new GeraCodigo(result);
-        gerador.gera();
-        */
+        gerador.gerar(nomeArq);
+        System.out.println("Gerado codigo MIPS em '"+nomeArq+"'.");
+
     }
 }
