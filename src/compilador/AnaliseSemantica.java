@@ -20,7 +20,7 @@ public class AnaliseSemantica {
         
         // b) as funções chamadas foram definidas e com a quantidade de parâmetros compatível,
         QuantParamVisitor quantParam = new QuantParamVisitor();
-        //quantParam.visit(block);
+        quantParam.visit(block);
 
         // c) não há parâmetros repetidos (na declaração de uma função),
         ParamRepeatVisitor paramRepeat = new ParamRepeatVisitor();

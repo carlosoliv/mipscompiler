@@ -1,10 +1,10 @@
 a = 312;
 b = 111;
 def mdc(a,b) =
-	if moA(a,b)== 0
+	if mod(a,b)== 0
 	then b
-	else mdB(b,moC(a,b));
+	else mdc(b,mod(a,b));
 def mod(a,b) =
 	if a< b
 	then a
-	else moD(a-b,b);
+	else mod(a-b,b);
