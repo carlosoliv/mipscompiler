@@ -24,6 +24,7 @@ public class Main {
         // Fazendo a analise semantica
         AnaliseSemantica analise = new AnaliseSemantica(result);
         analise.analisa();
+        System.out.println("Passou em todas as analises semanticas!");
         
         /*
         // Fazendo a geracao de codigo MIPS
